@@ -203,6 +203,7 @@ sap.designstudio.sdk.Component.subclass("com.ar.sample.maps.Leaflet", function()
 	
 	this.init = function() {
 		var geojson;
+		var geojson_world;
 		var map = L.map(this.$()[0]).setView([51.05, -114.09], 18);
 		
 		//Leaflet ui helpers
@@ -224,12 +225,15 @@ sap.designstudio.sdk.Component.subclass("com.ar.sample.maps.Leaflet", function()
 		    geojson.resetStyle(e.target);
 		}
 		
+		function resetHighlightWorld(e) {
+		    geojson_world.resetStyle(e.target);
+		}
+		
 		function zoomToFeature(e) {
 		    map.fitBounds(e.target.getBounds());
 		}
 		
 		function onEachFeature(feature, layer) {
-		    layer.openPopup("<b>" + feature.properties.NAME + "</b>");
 			layer.on({
 		        mouseover: highlightFeature,
 		        mouseout: resetHighlight,
@@ -267,7 +271,12 @@ sap.designstudio.sdk.Component.subclass("com.ar.sample.maps.Leaflet", function()
 
 		//Overlay maps
 		//GeoJSON
-		geojson = L.geoJson(world_data, {
+		geojson = L.geoJson(canada_data, {
+		    style: style,
+		    onEachFeature: onEachFeature
+		}).addTo(map);
+		
+		geojson_world = L.geoJson(world_data, {
 		    style: style,
 		    onEachFeature: onEachFeature
 		}).addTo(map);
@@ -307,12 +316,16 @@ sap.designstudio.sdk.Component.subclass("com.ar.sample.maps.Leaflet", function()
 		
 		var cities = L.layerGroup([littleton, denver, aurora]);
 		var marker = [];
-		marker[0] = L.marker([stations.station[0].latlng, stations.station[0].lng]).addTo(map);
 
 		for(i=0; i < stations.station.length; i++) {
 			//alert(stations.station[i].address);
-			marker[i] = L.marker([stations.station[i].latlng, stations.station[i].lng]).addTo(map);
+			marker[i] = L.marker([stations.station[i].latlng, stations.station[i].lng]);
 
+		}
+		
+		marker_layer = new L.featureGroup();
+		for(i=0;i<marker.length;i++) {
+		      marker_layer.addLayer(marker[i]);
 		}
 		
 		
@@ -341,7 +354,9 @@ sap.designstudio.sdk.Component.subclass("com.ar.sample.maps.Leaflet", function()
 		
 		var overlayMaps = {
 			    "Cities": cities,
-			    "Canada GeoJSON": geojson
+			    "Gas Stations": marker_layer,
+			    "Canada GeoJSON": geojson,
+			    "World GeoJSON": geojson_world
 			};	  
 			    			  
 		
