@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdkExtension
+    xmlns="http://www.sap.com/bi/zen/sdk"
+    id="com.ar.sample.maps"
+    title="Sample Maps Pack"
+    version="1.0"
+    vendor="ar">
+    <component
+        id="GoogleMaps"
+        title="Google Maps"
+        icon="res/icon.png"
+        handlerType="div">
+
+        <jsInclude>http://maps.googleapis.com/maps/api/js?key=AIzaSyDEljnKUGmazFN0AloAnSzHrgce-OgcaAo&amp;sensor=false</jsInclude>
+        <jsInclude>res/js/component.js</jsInclude>
+
+        <property
+            id="maptype"
+            type="String"
+            title="Map Type">
+            <possibleValue>hybrid</possibleValue>
+            <possibleValue>roadmap</possibleValue>
+            <possibleValue>satellite</possibleValue>
+            <possibleValue>terrain</possibleValue>
+        </property>
+        <property
+            id="zoom"
+            type="int"
+            title="Zoom"/>
+        <property
+            id="onZoom"
+            type="ScriptText"
+            title="On Zoom"/>
+
+        <initialization>
+            <defaultValue property="WIDTH">600</defaultValue>
+            <defaultValue property="HEIGHT">360</defaultValue>
+            <defaultValue property="maptype">roadmap</defaultValue>
+            <defaultValue property="zoom">14</defaultValue>
+        </initialization>
+    </component>
+    <component
+        id="DataMap"
+        title="Google Maps with Data"
+        icon="res/icon.png"
+        handlerType="div"
+        databound="true">
+
+        <jsInclude>http://maps.googleapis.com/maps/api/js?key=AIzaSyDEljnKUGmazFN0AloAnSzHrgce-OgcaAo&amp;sensor=false</jsInclude>
+        <jsInclude>res/js/component.js</jsInclude>
+
+        <property
+            id="redmarker"
+            type="ResultCellList"
+            title="Red Markers"/>
+        <property
+            id="bluemarker"
+            type="ResultCellList"
+            title="Blue Markers"/>
+        <property
+            id="addressdimension"
+            type="String"
+            title="Address Dimension"/>
+
+        <initialization>
+            <defaultValue property="WIDTH">600</defaultValue>
+            <defaultValue property="HEIGHT">360</defaultValue>
+        </initialization>
+    </component>
+    <component id="Leaflet" title="Leaflet" handlerType="div"
+    	databound="true">
+    	<jsInclude>
+    		http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js
+    	</jsInclude>
+    	<jsInclude>res/js/component.js</jsInclude>
+    	<jsInclude>res/js/canada.js</jsInclude>
+    	<jsInclude>res/js/world-topo-min.js</jsInclude>
+    	<cssInclude>
+    		http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css
+    	</cssInclude>
+    	<property type="ResultSet" title="GeoJSON Layer" id="geo"></property>
+
+
+    	<initialization>
+    		<defaultValue property="WIDTH">600</defaultValue>
+    		<defaultValue property="HEIGHT">360</defaultValue>
+    	</initialization>
+    </component>
+</sdkExtension>

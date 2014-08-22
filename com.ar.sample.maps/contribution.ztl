@@ -1,0 +1,9 @@
+class com.ar.sample.maps.GoogleMaps extends Component {
+  int getZoom() {*
+    return this.zoom;
+  *}
+  
+  void setZoom(int value) {*
+     this.zoom = value;
+  *}
+}
